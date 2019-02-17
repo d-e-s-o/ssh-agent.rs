@@ -1,3 +1,4 @@
+#[cfg(feature = "rlog")]
 use log::info;
 
 use ssh_agent::proto::{from_bytes, to_bytes};
@@ -17,6 +18,13 @@ use openssl::pkey::PKey;
 use openssl::hash::MessageDigest;
 use openssl::bn::BigNum;
 use openssl::pkey::Private;
+
+#[cfg(not(feature = "rlog"))]
+macro_rules! info {
+    ($($arg:tt)*) => ({
+        println!($($arg)*);
+    })
+}
 
 #[derive(Clone, PartialEq, Debug)]
 struct Identity {

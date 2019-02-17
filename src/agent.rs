@@ -1,6 +1,7 @@
 use byteorder::{BigEndian, ReadBytesExt};
 use bytes::{BytesMut, BufMut};
 use futures::future::FutureResult;
+#[cfg(feature = "rlog")]
 use log::{error, info};
 use tokio::codec::{Framed, Encoder, Decoder};
 use tokio::net::TcpListener;
@@ -17,6 +18,21 @@ use std::sync::Arc;
 use super::error::AgentError;
 use super::proto::message::Message;
 use super::proto::{from_bytes, to_bytes};
+
+#[cfg(not(feature = "rlog"))]
+macro_rules! error {
+    ($($arg:tt)*) => ({
+        eprintln!($($arg)*);
+    })
+}
+
+#[cfg(not(feature = "rlog"))]
+macro_rules! info {
+    ($($arg:tt)*) => ({
+        println!($($arg)*);
+    })
+}
+
 
 struct MessageCodec;
 

@@ -15,6 +15,10 @@ edition = "2018"
 travis-ci = { repository = "sekey/ssh-agent.rs" }
 codecov = { repository = "sekey/ssh-agent.rs" }
 
+[features]
+default = []
+rlog = ["log"]
+
 [dependencies]
 byteorder = "1.2.7"
 serde = {version = "1.0.87", features = ["derive"]}
@@ -22,7 +26,7 @@ bytes = "0.4.11"
 tokio = "0.1.15"
 tokio-uds = "0.2.5"
 futures = "0.1.25"
-log = "0.4.6"
+log = {version = "0.4.6", optional = true}
 
 [dev-dependencies]
 env_logger = "0.6.0"
